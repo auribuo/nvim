@@ -11,6 +11,7 @@ function M.setup()
     -- Edits
     map('n', '<A-up>', '"zddk"zP', { desc = 'Move line up' })
     map('n', '<A-down>', '"zdd"zp', { desc = 'Move line down' })
+    map('n', 'U', cmd("Undotree"), { desc = "Undotree show" })
 
     -- Find and explore
     local fzf = require('fzf-lua')

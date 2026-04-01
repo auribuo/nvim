@@ -21,6 +21,7 @@ pack {
     'ibhagwan/fzf-lua',
     'folke/which-key.nvim',
 }
+vim.cmd.packadd("nvim.undotree")
 
 require('plugins.lualine').setup()
 require('plugins.bufferline').setup()

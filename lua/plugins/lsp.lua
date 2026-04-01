@@ -1,4 +1,4 @@
-local lang_servers = { 'lua_ls' }
+local lang_servers = require('plugins.servers')
 
 for _, ls in ipairs(lang_servers) do
     vim.lsp.enable(ls)

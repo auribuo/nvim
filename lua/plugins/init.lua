@@ -1,10 +1,10 @@
-local function plug(shorts)
+local function pack(shorts)
     for _, short in ipairs(shorts) do
-        vim.pack.add{'https://github.com/' .. short}
+        vim.pack.add { 'https://github.com/' .. short }
     end
 end
 
-plug {
+pack {
     'neovim/nvim-lspconfig',
     'nvim-treesitter/nvim-treesitter',
     'rktjmp/lush.nvim',
@@ -13,7 +13,6 @@ plug {
     'nvim-mini/mini.icons',
     'stevearc/oil.nvim',
     'wakatime/vim-wakatime',
-    'karb94/neoscroll.nvim',
     'mg979/vim-visual-multi',
     'windwp/nvim-autopairs',
     'akinsho/toggleterm.nvim',
@@ -25,15 +24,14 @@ plug {
 
 require('plugins.lualine').setup()
 require('plugins.bufferline').setup()
-require 'plugins.treesitter'
-require 'plugins.lsp'
-require 'plugins.fzf'
-require 'plugins.blink'
-require 'plugins.toggleterm'
-require 'plugins.whichkey'
+require('plugins.treesitter')
+require('plugins.lsp')
+require('plugins.fzf')
+require('plugins.blink')
+require('plugins.toggleterm')
+require('plugins.whichkey')
 
 require('oil').setup {}
-require('neoscroll').setup {}
 require('nvim-autopairs').setup {}
 
 vim.g.VM_silent_exit = 1

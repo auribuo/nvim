@@ -1,19 +1,30 @@
 local M = {
     callbacks = {}
 }
-local caelestia_path = '/home/aurelio/.local/state/caelestia/scheme.json'
-local hl = vim.api.nvim_set_hl
 
+local home = vim.fn.environ()['HOME']
+if not home then
+    error("HOME environment variable not set")
+end
+local caelestia_path = home .. '/.local/state/caelestia/scheme.json'
+
+local hl = vim.api.nvim_set_hl
 local c = {}
 
 local function load_colors()
     local f = io.open(caelestia_path, "r")
-    if not f then return end
+    if not f then
+        error("Could not open file: " .. caelestia_path)
+        return
+    end
     local content = f:read("*a")
     f:close()
 
     local ok, data = pcall(vim.fn.json_decode, content)
-    if not ok or not data then return end
+    if not ok or not data then
+        error("Could not decode json file: " .. caelestia_path)
+        return
+    end
 
     c = data.colours
     for key, value in pairs(c) do
@@ -102,12 +113,15 @@ end
 
 local function watch_file(path)
     local w = vim.loop.new_fs_event()
-    if not w then return end
+    if not w then
+        vim.notify("Could not watch theme file", vim.log.levels.WARN)
+        return
+    end
     local on_change
     on_change = function()
         vim.schedule(function()
             M.nvim_theme()
-            vim.notify("Caelestia theme reloaded!", vim.log.levels.INFO)
+            vim.notify("Caelestia theme reloaded", vim.log.levels.INFO)
         end)
         w:stop()
         w:start(path, {}, on_change)

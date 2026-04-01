@@ -8,17 +8,18 @@ end
 
 function M.setup()
     require('lualine').setup {
-        options = { theme = palette.lualine_theme() },
-        -- tabline = {
-        --     lualine_a = { 'buffers' },
-        --     lualine_z = { 'tabs' }
-        -- },
+        options = {
+            theme = palette.lualine_theme(),
+            component_separators = { left = '', right = '' },
+            section_separators = { left = '', right = '' },
+        },
         sections = {
+            lualine_a = { { 'mode', separator = { right = '' } } },
             lualine_b = { '%y', 'filename' },
             lualine_c = { 'branch' },
             lualine_x = {},
             lualine_y = { 'lsp_status', 'diagnostics' },
-            lualine_z = { pos, 'progress' }
+            lualine_z = { { pos, separator = { left = '', right = '' } }, 'progress' }
         },
         extensions = { 'oil' }
     }

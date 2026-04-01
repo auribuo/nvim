@@ -12,4 +12,4 @@ require 'plugins'
 require 'autocmds'
 
 -- KEYMAPS
-require 'mappings'
+require('mappings').setup()

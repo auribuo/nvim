@@ -1,12 +1,5 @@
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = { '<filetype>' },
-    callback = function()
-        vim.treesitter.start()
-        vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-        vim.wo[0][0].foldmethod = 'expr'
-        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-    end,
-})
+local mappings = require("mappings")
+
 vim.api.nvim_create_autocmd('FileType', {
     pattern = 'make',
     callback = function()
@@ -15,4 +8,8 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function() vim.hl.on_yank() end
+})
+vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+    callback = mappings.lsp_keymap,
 })

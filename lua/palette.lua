@@ -1,21 +1,31 @@
-local M = {}
+local M = {
+    callbacks = {}
+}
 local caelestia_path = '/home/aurelio/.local/state/caelestia/scheme.json'
-local f = io.open(caelestia_path, "r")
-if not f then error("Failed to open file: " .. caelestia_path) end
-local content = f:read("*a")
-f:close()
-local ok, data = pcall(vim.fn.json_decode, content)
-if not ok or not data then
-    error("Failed to deserialize scheme")
-end
-local c = data.colours
-for key, value in pairs(c) do
-    c[key] = '#' .. value
-end
-
 local hl = vim.api.nvim_set_hl
 
+local c = {}
+
+local function load_colors()
+    local f = io.open(caelestia_path, "r")
+    if not f then return end
+    local content = f:read("*a")
+    f:close()
+
+    local ok, data = pcall(vim.fn.json_decode, content)
+    if not ok or not data then return end
+
+    c = data.colours
+    for key, value in pairs(c) do
+        if not value:find("^#") then
+            c[key] = '#' .. value
+        end
+    end
+end
+
 function M.nvim_theme()
+    load_colors()
+
     -- Reset highlights
     vim.cmd("hi clear")
     if vim.fn.exists("syntax_on") then vim.cmd("syntax reset") end
@@ -36,7 +46,12 @@ function M.nvim_theme()
     hl(0, "PmenuSel", { fg = c.onPrimary, bg = c.primary })
     hl(0, "VertSplit", { fg = c.surfaceContainerHigh })
     hl(0, "WinSeparator", { fg = c.surfaceContainerHigh })
-    hl(0, "StatusLine", { guibg = nil })
+    hl(0, "StatusLine", { bg = nil })
+    hl(0, "StatusLineNC", { bg = nil })
+    hl(0, "Folded", { bg = nil, fg = c.subtext0, bold = true })
+
+    -- Dirs
+    hl(0, "Directory", { fg = c.blue })
 
     -- Syntax Highlighting
     hl(0, "Comment", { fg = c.subtext0, italic = true })
@@ -46,7 +61,6 @@ function M.nvim_theme()
     hl(0, "Number", { fg = c.peach })
     hl(0, "Boolean", { fg = c.tertiary })
     hl(0, "Float", { fg = c.peach })
-
     hl(0, "Identifier", { fg = c.blue })
     hl(0, "Function", { fg = c.blue })
     hl(0, "Statement", { fg = c.mauve })
@@ -56,7 +70,6 @@ function M.nvim_theme()
     hl(0, "Operator", { fg = c.onSurfaceVariant })
     hl(0, "Keyword", { fg = c.primary })
     hl(0, "Exception", { fg = c.mauve })
-
     hl(0, "PreProc", { fg = c.teal })
     hl(0, "Type", { fg = c.yellow })
     hl(0, "Special", { fg = c.sky })
@@ -64,7 +77,7 @@ function M.nvim_theme()
     hl(0, "Error", { fg = c.error })
     hl(0, "Todo", { fg = c.background, bg = c.tertiary, bold = true })
 
-    -- Treesitter (@syntax)
+    -- Treesitter
     hl(0, "@variable", { fg = c.text })
     hl(0, "@variable.builtin", { fg = c.mauve })
     hl(0, "@variable.member", { fg = c.error })
@@ -81,7 +94,28 @@ function M.nvim_theme()
     hl(0, "DiagnosticInfo", { fg = c.blue })
     hl(0, "DiagnosticHint", { fg = c.teal })
     hl(0, "DiagnosticUnderlineError", { undercurl = true, sp = c.error })
+
+    for _, cb in ipairs(M.callbacks) do
+        cb()
+    end
 end
+
+local function watch_file(path)
+    local w = vim.loop.new_fs_event()
+    if not w then return end
+    local on_change
+    on_change = function()
+        vim.schedule(function()
+            M.nvim_theme()
+            vim.notify("Caelestia theme reloaded!", vim.log.levels.INFO)
+        end)
+        w:stop()
+        w:start(path, {}, on_change)
+    end
+    w:start(path, {}, on_change)
+end
+
+watch_file(caelestia_path)
 
 function M.lualine_theme()
     return {
@@ -103,20 +137,19 @@ end
 
 function M.bufferline_theme()
     return {
-        fill = { bg = c.background },
-        background = { bg = c.background },
-
+        fill = { bg = nil },
+        background = { bg = nil },
         buffer_selected = {
             fg = c.primary,
-            bg = c.surfaceContainer,
+            bg = nil,
             bold = true,
             italic = false,
         },
-        indicator_selected = {
-            fg = c.primary,
-            bg = c.surfaceContainer,
-        },
     }
+end
+
+function M.register_cb(cb)
+    table.insert(M.callbacks, cb)
 end
 
 return M

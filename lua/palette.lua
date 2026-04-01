@@ -48,7 +48,7 @@ function M.nvim_theme()
     hl(0, "Float", { fg = c.peach })
 
     hl(0, "Identifier", { fg = c.blue })
-    hl(0, "Function", { fg = c.blue, bold = true })
+    hl(0, "Function", { fg = c.blue })
     hl(0, "Statement", { fg = c.mauve })
     hl(0, "Conditional", { fg = c.mauve })
     hl(0, "Repeat", { fg = c.mauve })
@@ -59,19 +59,21 @@ function M.nvim_theme()
 
     hl(0, "PreProc", { fg = c.teal })
     hl(0, "Type", { fg = c.yellow })
-    hl(0, "Special", { fg = c.primary })
+    hl(0, "Special", { fg = c.sky })
     hl(0, "Underlined", { underline = true })
     hl(0, "Error", { fg = c.error })
     hl(0, "Todo", { fg = c.background, bg = c.tertiary, bold = true })
 
     -- Treesitter (@syntax)
-    hl(0, "@variable", { fg = c.onSurface })
+    hl(0, "@variable", { fg = c.text })
     hl(0, "@variable.builtin", { fg = c.mauve })
-    hl(0, "@keyword", { fg = c.mauve, italic = true })
+    hl(0, "@variable.member", { fg = c.error })
+    hl(0, "@keyword", { fg = c.mauve })
     hl(0, "@function.builtin", { fg = c.blue })
-    hl(0, "@property", { fg = c.secondary })
+    hl(0, "@property", { fg = c.error })
     hl(0, "@type.builtin", { fg = c.yellow })
     hl(0, "@constructor", { fg = c.teal })
+    hl(0, "@type", { fg = c.onSuccessContainer })
 
     -- LSP Diagnostics
     hl(0, "DiagnosticError", { fg = c.error })
@@ -96,6 +98,24 @@ function M.lualine_theme()
             b = { bg = c.background, fg = c.subtext0 },
             c = { bg = c.background, fg = c.subtext0 },
         }
+    }
+end
+
+function M.bufferline_theme()
+    return {
+        fill = { bg = c.background },
+        background = { bg = c.background },
+
+        buffer_selected = {
+            fg = c.primary,
+            bg = c.surfaceContainer,
+            bold = true,
+            italic = false,
+        },
+        indicator_selected = {
+            fg = c.primary,
+            bg = c.surfaceContainer,
+        },
     }
 end
 

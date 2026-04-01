@@ -8,3 +8,4 @@ vim.o.relativenumber = true
 vim.o.ruler = true
 vim.o.confirm = true
 vim.o.signcolumn = 'yes:1'
+vim.o.termguicolors = true

@@ -9,7 +9,9 @@ vim.pack.add {
     'https://github.com/wakatime/vim-wakatime',
     'https://github.com/karb94/neoscroll.nvim',
     'https://github.com/mg979/vim-visual-multi',
-    'https://github.com/windwp/nvim-autopairs'
+    'https://github.com/windwp/nvim-autopairs',
+    'https://github.com/akinsho/toggleterm.nvim',
+    'https://github.com/akinsho/bufferline.nvim',
 }
 
 require('nvim-treesitter').setup {
@@ -24,6 +26,7 @@ require('nvim-treesitter').setup {
 
 require 'plugins.lsp'
 require 'plugins.lualine'
+require 'plugins.bufferline'
 
 require('blink.cmp').setup {
     cmdline = { enabled = true },
@@ -51,6 +54,27 @@ require('blink.cmp').setup {
 require('oil').setup {}
 require('neoscroll').setup {}
 require('nvim-autopairs').setup {}
+require("toggleterm").setup {
+    size = 25,
+    open_mapping = [[<c-i>]],
+    hide_numbers = true,
+    shade_terminals = false,
+    start_in_insert = true,
+    insert_mappings = true,
+    terminal_mappings = true,
+    persist_size = true,
+    direction = 'float',
+    close_on_exit = true,
+    shell = vim.o.shell,
+    float_opts = {
+        border = 'curved', -- 'single' | 'double' | 'shadow' | 'curved'
+        winblend = 0,
+        highlights = {
+            border = "FloatBorder",
+            background = "Normal",
+        }
+    }
+}
 
 vim.g.VM_silent_exit = 1
 vim.g.VM_show_warnings = 0

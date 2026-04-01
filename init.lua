@@ -1,15 +1,15 @@
 vim.g.mapleader = ' '
 
--- PLUGINS
-require 'plugins'
+require('palette').nvim_theme()
 
 -- OPTIONS
 require 'options'
+
+-- PLUGINS
+require 'plugins'
 
 -- AUTOCMDS
 require 'autocmds'
 
 -- KEYMAPS
 require 'mappings'
-
-require('palette').nvim_theme()

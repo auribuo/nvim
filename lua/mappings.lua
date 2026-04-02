@@ -72,7 +72,7 @@ function M.lsp_keymap(ev)
     map('n', ']d', function() diag.jump({ count = 1 }) end, { buffer = ev.buf, desc = "Go to next diagnostic" })
     map('n', ']d', function() diag.jump({ count = -1 }) end, { buffer = ev.buf, desc = "Go to previous diagnostic" })
     map('n', '<leader>d', diag.open_float, { desc = "Show line diagnostics" })
-
+    map('n', '<leader>D', vim.diagnostic.setloclist, { desc = 'Open diagnostic quickfix list' })
     -- Refactoring
     map({ 'n', 'v' }, '<leader>ca', lspbuf.code_action, { buffer = ev.buf, desc = "LSP Code Actions" })
     map('n', '<leader>ra', lspbuf.rename, { buffer = ev.buf, desc = "LSP Rename variable" })

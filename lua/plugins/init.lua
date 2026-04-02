@@ -6,9 +6,11 @@ end
 
 pack {
     'neovim/nvim-lspconfig',
+    'ibhagwan/fzf-lua',
     'nvim-treesitter/nvim-treesitter',
     'rktjmp/lush.nvim',
     'nvim-lualine/lualine.nvim',
+    'arkav/lualine-lsp-progress',
     'saghen/blink.cmp',
     'nvim-mini/mini.icons',
     'stevearc/oil.nvim',
@@ -20,6 +22,7 @@ pack {
     'nvim-tree/nvim-web-devicons',
     'ibhagwan/fzf-lua',
     'folke/which-key.nvim',
+    'lewis6991/gitsigns.nvim'
 }
 vim.cmd.packadd("nvim.undotree")
 

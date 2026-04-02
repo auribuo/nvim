@@ -6,7 +6,7 @@ require("toggleterm").setup {
     start_in_insert = true,
     terminal_mappings = true,
     persist_size = true,
-    direction = 'float',
+    direction = 'horizontal',
     close_on_exit = true,
     insert_mappings = true,
     shell = vim.o.shell or "sh",

@@ -1,4 +1,9 @@
 vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+vim.g.have_nerd_font = true
+
+-- OPTIONS
+require 'options'
 
 local palette = require('palette')
 
@@ -10,9 +15,6 @@ vim.api.nvim_create_user_command("ReloadTheme", function()
     palette.register_cb(require("plugins.bufferline").setup)
     palette.nvim_theme()
 end, {})
-
--- OPTIONS
-require 'options'
 
 -- PLUGINS
 require 'plugins'
@@ -27,14 +29,13 @@ require('mappings').setup()
 
 -- MISC
 vim.diagnostic.config({
+    update_in_insert = false,
+    severity_sort = true,
     virtual_text = {
         spacing = 4,
         prefix = '●',
         severity_limit = vim.diagnostic.severity.HINT,
     },
-    update_in_insert = true,
-    float = {
-        border = "rounded",
-        source = "if_many",
-    },
+    float = { border = "rounded", source = "if_many", },
+    -- jump = { float = true } -- TODO: Find replacement
 })

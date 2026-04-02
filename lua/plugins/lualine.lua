@@ -17,7 +17,7 @@ function M.setup()
     local function neg(v) return function() return not v() end end
     local function pick(c, t, f) if c() then return t else return f end end
     local function is_small_win()
-        return win_width <= 127
+        return win_width <= 150
     end
 
     require('lualine').setup {

@@ -55,6 +55,9 @@ function M.setup()
     local wks = require('which-key').show
     map("n", "<leader>?", function() wks({ global = false }) end, { desc = "Buffer Local Keymaps" })
     map("n", "<leader>/", function() wks() end, { desc = "All Keymaps" })
+
+    -- Dev utils
+    map("n", "<leader>tr", cmd("ReloadTheme"), { desc = "DEV Reload color scheme" })
 end
 
 function M.lsp_keymap(ev)

@@ -25,6 +25,4 @@ function M.setup()
     }
 end
 
-palette.register_cb(M.setup)
-
 return M

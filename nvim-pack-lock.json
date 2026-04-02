@@ -24,18 +24,6 @@
       "rev": "5b9076dae1bfbe47ba4a14bc8b967cde0ab5d77e",
       "src": "https://github.com/nvim-mini/mini.icons"
     },
-    "mini.pairs": {
-      "rev": "b7fde3719340946feb75017ef9d75edebdeb0566",
-      "src": "https://github.com/echasnovski/mini.pairs"
-    },
-    "neoscroll.nvim": {
-      "rev": "c8d29979cb0cb3a2437a8e0ae683fd82f340d3b8",
-      "src": "https://github.com/karb94/neoscroll.nvim"
-    },
-    "nvim": {
-      "rev": "a7788416689dbefea659d9e9415c87926b0ba5d8",
-      "src": "https://github.com/catppuccin/nvim"
-    },
     "nvim-autopairs": {
       "rev": "59bce2eef357189c3305e25bc6dd2d138c1683f5",
       "src": "https://github.com/windwp/nvim-autopairs"

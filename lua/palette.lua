@@ -1,8 +1,6 @@
 local colors = require('colors')
 
-local M = {
-    callbacks = {}
-}
+local M = { callbacks = {} }
 
 local home = vim.fn.environ()['HOME']
 if not home then return end
@@ -12,33 +10,30 @@ local caelestia_path = home .. '/.local/state/caelestia/scheme.json'
 local c = {}
 local is_dark = true
 
-local function ifd(d, l)
-    if is_dark then return d else return l end
+local function ifd(d, l) if is_dark then return d else return l end end
+
+---@param col Color|nil
+local function m(col)
+    if not col then return nil end
+    local rgb = col:to_rgb()
+    if rgb:len() ~= 7 then error(rgb) end
+    return rgb
 end
 
----@class HiglightOpts
----@field fg Color|nil
----@field bg Color|nil
----@field bold boolean|nil
----@field italic boolean|nil
-
----@param name string
 ---@param opts HiglightOpts
-local function hl(name, opts)
-    ---@param col Color|nil
-    local function m(col)
-        if not col then return nil end
-        local rgb = col:to_rgb()
-        if rgb:len() ~= 7 then error(rgb) end
-        return rgb
-    end
-    vim.api.nvim_set_hl(0, name, {
+local function co(opts)
+    return {
         fg = m(opts.fg),
         bg = m(opts.bg),
         bold = opts.bold or false,
         italic = opts.italic or false,
-    })
+        gui = opts.gui
+    }
 end
+
+---@param name string
+---@param opts HiglightOpts
+local function hl(name, opts) vim.api.nvim_set_hl(0, name, co(opts)) end
 
 local function load_colors()
     local f = io.open(caelestia_path, "r")
@@ -128,11 +123,7 @@ function M.nvim_theme()
     hl("@property", { fg = c.error })
     hl("@type.builtin", { fg = c.yellow:lighten_by(ifd(1, 0.7)) })
     hl("@constructor", { fg = c.teal })
-    hl("@type", {
-        fg = c.primary:complementary()
-            :desaturate_by(ifd(1.5, 2))
-            :lighten_by(ifd(1, 0.7))
-    })
+    hl("@type", { fg = c.primary:complementary():desaturate_by(ifd(1.5, 2)):lighten_by(ifd(1, 0.7)) })
 
     -- LSP Diagnostics
     hl("DiagnosticError", { fg = c.error })
@@ -169,27 +160,27 @@ watch_file(caelestia_path)
 function M.lualine_theme()
     return {
         normal = {
-            a = { bg = c.primary:lighten_by(0.9):to_rgb(), fg = c.onPrimary:to_rgb(), gui = 'bold' },
-            b = { bg = c.surfaceContainer:to_rgb(), fg = c.onSurface:to_rgb() },
-            c = { bg = nil, fg = c.onSurfaceVariant:to_rgb() },
+            a = co { bg = c.primary:lighten_by(0.9), fg = c.onPrimary, gui = 'bold' },
+            b = co { bg = c.surfaceContainer, fg = c.onSurface },
+            c = co { bg = nil, fg = c.onSurfaceVariant },
         },
-        insert = { a = { bg = c.green:to_rgb(), fg = c.background:to_rgb(), gui = 'bold' } },
-        visual = { a = { bg = c.mauve:to_rgb(), fg = c.background:to_rgb(), gui = 'bold' } },
-        replace = { a = { bg = c.error:to_rgb(), fg = c.background:to_rgb(), gui = 'bold' } },
+        insert = { a = co { bg = c.green, fg = c.background, gui = 'bold' } },
+        visual = { a = co { bg = c.mauve, fg = c.background, gui = 'bold' } },
+        replace = { a = co { bg = c.error, fg = c.background, gui = 'bold' } },
         inactive = {
-            a = { bg = c.background:to_rgb(), fg = c.subtext0:to_rgb() },
-            b = { bg = c.background:to_rgb(), fg = c.subtext0:to_rgb() },
-            c = { bg = c.background:to_rgb(), fg = c.subtext0:to_rgb() },
+            a = co { bg = c.background, fg = c.subtext0 },
+            b = co { bg = c.background, fg = c.subtext0 },
+            c = co { bg = c.background, fg = c.subtext0 },
         }
     }
 end
 
 function M.bufferline_theme()
     return {
-        fill = { bg = nil },
-        background = { bg = nil },
-        buffer_selected = {
-            fg = c.primary:to_rgb(),
+        fill = co { bg = nil },
+        background = co { bg = nil },
+        buffer_selected = co {
+            fg = c.primary,
             bg = nil,
             bold = true,
             italic = false,
@@ -300,3 +291,10 @@ return M
 --- @field onSuccess Color|nil
 --- @field successContainer Color|nil
 --- @field onSuccessContainer Color|nil
+
+---@class HiglightOpts
+---@field fg Color|nil
+---@field bg Color|nil
+---@field bold boolean|nil
+---@field italic boolean|nil
+---@field gui string|nil

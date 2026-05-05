@@ -35,13 +35,14 @@ function M.setup()
             lualine_c = { 'branch' },
             lualine_x = {},
             lualine_y = {
-                { 'lsp_progress',
-                    display_components =
-                        pick(is_small_win,
-                            { { 'message' } },
-                            { 'lsp_client_name', { 'title', 'percentage' } }
-                        )
-                },
+                -- Seems annoying with some lsps
+                -- { 'lsp_progress',
+                --     display_components =
+                --         pick(is_small_win,
+                --             { { 'title' } },
+                --             { 'lsp_client_name', { 'title', 'percentage' } }
+                --         )
+                -- },
                 'diagnostics',
                 'lsp_status'
             },

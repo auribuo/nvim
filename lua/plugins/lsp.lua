@@ -16,8 +16,10 @@ vim.lsp.config('lua_ls', {
         Lua = {
             runtime = { version = 'LuaJIT' },
             workspace = {
+                checkThirdParty = false,
                 library = {
-                    vim.fn.expand '$VIMRUNTIME/lua'
+                    vim.env.VIMRUNTIME,
+                    '${3rd}/love2d/library'
                 }
             }
         }

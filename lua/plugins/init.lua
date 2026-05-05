@@ -1,10 +1,13 @@
 local function pack(shorts)
+    local plugins = {}
     for _, short in ipairs(shorts) do
-        vim.pack.add { 'https://github.com/' .. short }
+        table.insert(plugins, 'https://github.com/' .. short)
     end
+    vim.pack.add(plugins, {})
 end
 
 pack {
+    'nvim-lua/plenary.nvim',
     'neovim/nvim-lspconfig',
     'ibhagwan/fzf-lua',
     'nvim-treesitter/nvim-treesitter',
@@ -22,7 +25,10 @@ pack {
     'nvim-tree/nvim-web-devicons',
     'ibhagwan/fzf-lua',
     'folke/which-key.nvim',
-    'lewis6991/gitsigns.nvim'
+    'lewis6991/gitsigns.nvim',
+    'nvimtools/none-ls.nvim',
+    'stevearc/aerial.nvim',
+    'MeanderingProgrammer/render-markdown.nvim',
 }
 vim.cmd.packadd("nvim.undotree")
 
@@ -34,9 +40,12 @@ require('plugins.fzf')
 require('plugins.blink')
 require('plugins.toggleterm')
 require('plugins.whichkey')
+require('plugins.nonels')
 
 require('oil').setup {}
 require('nvim-autopairs').setup {}
+require('aerial').setup {}
+require('render-markdown').setup {}
 
 vim.g.VM_silent_exit = 1
 vim.g.VM_show_warnings = 0

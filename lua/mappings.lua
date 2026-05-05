@@ -37,6 +37,7 @@ function M.setup()
     -- Basic LSP remaps
     map('n', '<C-/>', 'gcc', { remap = true, desc = "Comment line" })
     map('v', '<C-/>', 'gc', { remap = true, desc = "Comment selection" })
+    map('n', '<leader>a', cmd("AerialToggle!"), { desc = "Aerial Toggle window" })
 
     -- Navigate windows
     map('n', '<A-h>', '<C-w>h', { desc = 'Move to left window' })
@@ -58,6 +59,8 @@ function M.setup()
 
     -- Dev utils
     map("n", "<leader>tr", cmd("ReloadTheme"), { desc = "DEV Reload color scheme" })
+
+    map('n', '<leader>mt', cmd("RenderMarkdown buf_toggle"), { desc = "Render Markdown toggle buffer render" })
 end
 
 function M.lsp_keymap(ev)

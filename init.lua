@@ -36,6 +36,6 @@ vim.diagnostic.config({
         prefix = '●',
         severity_limit = vim.diagnostic.severity.HINT,
     },
-    float = { border = "rounded", source = "if_many", },
-    -- jump = { float = true } -- TODO: Find replacement
+    float = { border = "rounded", source = "if_many" },
+    jump = { on_jump = vim.diagnostic.open_float }
 })
